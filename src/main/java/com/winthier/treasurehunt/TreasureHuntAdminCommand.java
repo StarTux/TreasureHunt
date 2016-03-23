@@ -18,14 +18,26 @@ public class TreasureHuntAdminCommand implements CommandExecutor {
         if ("reload".equals(firstArg) && args.length == 1) {
             plugin.load();
             plugin.msg(sender, "TreasureHunt config reloaded");
-        } else if ("token".equals(firstArg) && args.length == 1) {
+        } else if ("token".equals(firstArg) && (args.length == 1 || args.length == 2)) {
             if (player == null) {
                 sender.sendMessage("Player expected");
                 return true;
             }
-            final int amount = 16;
-            plugin.giveToken(player, amount);
-            plugin.msg(player, "&e&lTreasureHunt&r %d tokens spawned in.", amount);
+            if (args.length == 2) {
+                String targetName = args[1];
+                Player target = plugin.getServer().getPlayer(targetName);
+                if (target == null) {
+                    plugin.msg(player, "&cPlayer not found: %s", targetName);
+                    return true;
+                }
+                final int amount = 1;
+                plugin.giveToken(target, amount);
+                plugin.msg(player, "&e&lTreasureHunt&r Gave %d tokens to %s.", amount, target.getName());
+            } else {
+                final int amount = 16;
+                plugin.giveToken(player, amount);
+                plugin.msg(player, "&e&lTreasureHunt&r %d tokens spawned in.", amount);
+            }
         } else if ("list".equals(firstArg) && args.length == 1) {
             int count = 0;
             plugin.msg(sender, "TreasureHunt treasure list");
