@@ -1,0 +1,26 @@
+name: TreasureHunt
+description: Hide treasure for your players
+author: StarTux
+version: 0.1
+main: com.winthier.treasurehunt.TreasureHuntPlugin
+depend: []
+commands:
+  treasurehunt:
+    description: User Interface
+    usage: /<command>
+    permission: treasurehunt.player
+  treasurehuntadmin:
+    description: Admin interface
+    usage: |-
+      /<command> reload - Reload configs
+      /<command> token - Spawn token
+      /<command> list - List treasures
+      /<command> create <name> - Create treasure
+      /<command> debug - Toggle debug mode
+      /<command> cancel - Cancel all admin actions
+    permission: treasurehunt.admin
+permissions:
+  treasurehunt.player:
+    default: op
+  treasurehunt.admin:
+    default: op
