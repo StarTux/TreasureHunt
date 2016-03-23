@@ -86,14 +86,14 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled=true, priority=EventPriority.LOW)
+    @EventHandler(ignoreCancelled=false, priority=EventPriority.LOW)
     public void onPlayerInteractEntityToken(PlayerInteractEntityEvent event) {
         if (holdsToken(event.getPlayer(), event.getHand())) {
             event.setCancelled(true);
         }
     }
 
-    @EventHandler(ignoreCancelled=true, priority=EventPriority.LOW)
+    @EventHandler(ignoreCancelled=false, priority=EventPriority.LOW)
     public void onPlayerInteractAtEntityToken(PlayerInteractAtEntityEvent event) {
         if (holdsToken(event.getPlayer(), event.getHand())) {
             event.setCancelled(true);
