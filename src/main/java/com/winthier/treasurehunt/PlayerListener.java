@@ -12,7 +12,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 @RequiredArgsConstructor
 @Getter
@@ -58,8 +61,42 @@ public class PlayerListener implements Listener {
         plugin.msg(player, "You found the &a%s&r treasure!", treasure.getName());
         if (isFirst) {
             for (Player other: plugin.getServer().getOnlinePlayers()) {
-                plugin.msg(other, "&a%s&r just found the &a%s&r treasure.", player.getName(), treasure.getName());
+                if (other.hasPermission("treasurehunt.player")) {
+                    plugin.msg(other, "&a%s&r just found the &a%s&r treasure.", player.getName(), treasure.getName());
+                }
             }
+        }
+    }
+
+    boolean holdsToken(Player player, EquipmentSlot slot) {
+        if (slot == null) return false;
+        switch (slot) {
+        case HAND: return plugin.isToken(player.getInventory().getItemInMainHand());
+        case OFF_HAND: return plugin.isToken(player.getInventory().getItemInOffHand());
+        default: return false;
+        }
+    }
+
+    @EventHandler(ignoreCancelled=false, priority=EventPriority.LOW)
+    public void onPlayerInteractToken(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK &&
+            event.getAction() != Action.RIGHT_CLICK_AIR) return;
+        if (holdsToken(event.getPlayer(), event.getHand())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled=true, priority=EventPriority.LOW)
+    public void onPlayerInteractEntityToken(PlayerInteractEntityEvent event) {
+        if (holdsToken(event.getPlayer(), event.getHand())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled=true, priority=EventPriority.LOW)
+    public void onPlayerInteractAtEntityToken(PlayerInteractAtEntityEvent event) {
+        if (holdsToken(event.getPlayer(), event.getHand())) {
+            event.setCancelled(true);
         }
     }
 }
