@@ -60,6 +60,7 @@ public class PlayerListener implements Listener {
         // Tell, announce
         plugin.msg(player, "You found the &a%s&r treasure!", treasure.getName());
         if (isFirst) {
+            plugin.getLogger().info(player.getName() + " found treasure '" + treasure.getName() + "'");
             for (Player other: plugin.getServer().getOnlinePlayers()) {
                 if (other.hasPermission("treasurehunt.player")) {
                     plugin.msg(other, "&a%s&r just found the &a%s&r treasure.", player.getName(), treasure.getName());
