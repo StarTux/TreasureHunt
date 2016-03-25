@@ -51,7 +51,9 @@ public class TreasureHuntPlugin extends JavaPlugin {
 
     void giveToken(Player player, int amount) {
         ItemStack item = spawnToken(player, amount);
-        player.getWorld().dropItem(player.getEyeLocation(), item).setPickupDelay(0);
+        for (ItemStack drop: player.getInventory().addItem(item).values()) {
+            player.getWorld().dropItem(player.getEyeLocation(), drop).setPickupDelay(0);
+        }
     }
 
     void load() {
