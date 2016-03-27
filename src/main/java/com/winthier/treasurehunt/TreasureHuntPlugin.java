@@ -23,6 +23,7 @@ public class TreasureHuntPlugin extends JavaPlugin {
     private String tokenId, tokenTitle, tokenBoundPrefix;
     private final List<String> tokenLore = new ArrayList<String>();
     final PlayerListener playerListener = new PlayerListener(this);
+    boolean paused = false;
 
     @Override public void onEnable() {
         getServer().getPluginManager().registerEvents(playerListener, this);

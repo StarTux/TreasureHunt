@@ -50,6 +50,7 @@ public class PlayerListener implements Listener {
             plugin.msg(player, "&e&lTreasureHunt&r This is treasure '&a%s&r'.", treasure.getName());
             return;
         }
+        if (plugin.paused) return;
         if (treasure.hasFound(player)) return;
         // Set found
         boolean isFirst = treasure.getFound().isEmpty();
@@ -63,7 +64,7 @@ public class PlayerListener implements Listener {
             plugin.getLogger().info(player.getName() + " found treasure '" + treasure.getName() + "'");
             for (Player other: plugin.getServer().getOnlinePlayers()) {
                 if (other.hasPermission("treasurehunt.player")) {
-                    plugin.msg(other, "&a%s&r just found the &a%s&r treasure.", player.getName(), treasure.getName());
+                    plugin.msg(other, "&a&lTreasureHunt&r %s just found the &a%s&r treasure.", player.getName(), treasure.getName());
                 }
             }
         }

@@ -19,6 +19,7 @@ public class TreasureHuntCommand implements CommandExecutor {
             return true;
         }
         plugin.msg(player, "&a&lTreasure Hunt&r List");
+        if (plugin.paused) return true;
         for (Treasure treasure: plugin.getTreasureConfig().getTreasures()) {
             if (treasure.hasFound(player)) {
                 plugin.msg(player, " [&ax&r]&a %s &8(found by %d)", treasure.getName(), treasure.getFound().size());

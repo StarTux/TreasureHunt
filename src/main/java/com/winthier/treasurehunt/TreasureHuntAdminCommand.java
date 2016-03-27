@@ -75,6 +75,12 @@ public class TreasureHuntAdminCommand implements CommandExecutor {
             plugin.getPlayerListener().adminCreateMap.remove(player.getUniqueId());
             plugin.getPlayerListener().adminDebugSet.remove(player.getUniqueId());
             plugin.msg(player, "&e&lTreasureHunt&r Admin actions cancelled.");
+        } else if ("pause".equals(firstArg) && args.length == 1) {
+            plugin.paused = true;
+            plugin.msg(player, "&e&lTreasureHunt&r Paused");
+        } else if ("unpause".equals(firstArg) && args.length == 1) {
+            plugin.paused = false;
+            plugin.msg(player, "&e&lTreasureHunt&r Unpaused");
         } else {
             return false;
         }
